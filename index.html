@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get the Weather</title>
+  <link rel="stylesheet" href="https://unpkg.com/claymorphism-css/dist/clay.css" />
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Weather Dashboard</h1>
+    <p>search for any city to get started</p>
+  </header>
+  <main>
+
+    <div class="input-container">
+      <form>
+        <label for="search-input">Search for city here:</label>
+        <input type="text" id="search-input">
+        <button type="submit" class="search btn">Search</button>
+
+      </form>
+      <div class="locations"></div>
+      <button class="clear btn">Clear</button>
+    </div>
+
+    <div class="forecast-container"></div>
+
+  </main>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
+  <script src="./assets/js/app.js"></script>
+</body>
+
+</html>
