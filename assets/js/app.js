@@ -57,6 +57,7 @@ window.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then(function (data) {
+        console.log(data);
         data.forEach((city) => {
           const coords = `lat=${city.lat}&lon=${city.lon}`
           getForecast(input, coords);
@@ -73,6 +74,12 @@ window.addEventListener("DOMContentLoaded", function () {
       })
       .then(function (data) {
         readResponse(input, data);
+        const locations = document.querySelectorAll(".forecast-location");
+        locations.forEach((location, index) => {
+          if (location.textContent === input) {
+            changeActiveLocation(locations[index]);
+          };
+        })
       })
   }
 
@@ -111,7 +118,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
     })
     createForecast(output);
-
     setLocalStorage(input, output);
   }
 
@@ -199,18 +205,18 @@ window.addEventListener("DOMContentLoaded", function () {
       input.classList.add("active");
     }
   }
-    // **** Local Storage ****
+  // **** Local Storage ****
 
-    function setLocalStorage(city, output) {
-      localStorage.setItem(city, JSON.stringify(output));
-    }
+  function setLocalStorage(city, output) {
+    localStorage.setItem(city, JSON.stringify(output));
+  }
 
-    function getLocalStorage(city) {
-      return JSON.parse(localStorage.getItem(city));
-    }
+  function getLocalStorage(city) {
+    return JSON.parse(localStorage.getItem(city));
+  }
 
-    function clearLocalStorage() {
-      localStorage.clear();
-    }
+  function clearLocalStorage() {
+    localStorage.clear();
+  }
 
-  });
+});

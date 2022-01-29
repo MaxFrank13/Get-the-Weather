@@ -131,8 +131,10 @@ form {
   background: var(--coldest);
 }
 .forecast-location {
+  text-transform: capitalize;
   background: var(--colder);
   color: var(--grey-1);
+  animation: dropdown 0.8s;
 }
 .active {
   box-shadow: inset 0px 0px 2px 2px var(--grey-4);
@@ -227,18 +229,17 @@ form {
   --clay-background: linear-gradient(var(--neutral), var(--coldest));
 }
 
-/* Media Queries */
-
-
 /* Animations */
 
 @keyframes dropdown {
   from {
     margin-top: -5%;
     height: 150%;
+    opacity: 0.5;
   }
 
   to {
+    opacity: 1;
     margin-top: 0%;
     height: 100%;
   }
