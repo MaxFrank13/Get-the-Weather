@@ -14,12 +14,10 @@ window.addEventListener("DOMContentLoaded", function () {
     objectKeys.forEach((key) => {
       currentStorage.push(JSON.stringify(getLocalStorage(key)));
     })
-    clearLocalStorage();
     objectKeys.forEach((key) => {
       getCoordinates(key);
       createForecastHeader(key);
     })
-
   }
 
 
@@ -42,7 +40,6 @@ window.addEventListener("DOMContentLoaded", function () {
     const output = getLocalStorage(input.textContent);
     createForecast(output);
     changeActiveLocation(input);
-
   });
 
   clearBtn.addEventListener('click', function () {
@@ -114,6 +111,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     })
     createForecast(output);
+
     setLocalStorage(input, output);
   }
 
@@ -125,11 +123,10 @@ window.addEventListener("DOMContentLoaded", function () {
     newHeader.classList.add('btn');
     newHeader.innerHTML = location;
     locationsContainer.append(newHeader);
-    // changeActiveLocation(newHeader);
   }
 
   function createForecast(output) {
-            // stop animation
+    // stop animation
     forecastContainer.innerHTML = "";
     // const newHeader = document.createElement("h2");
     // newHeader.textContent = input;
@@ -139,13 +136,13 @@ window.addEventListener("DOMContentLoaded", function () {
       const newSection = document.createElement("section");
       newSection.classList.add('forecast-card');
       newSection.classList.add('clay');
-      
+
       newSection.innerHTML = `<div class="forecast-heading"> <h3>${obj.date}</h3>
       <img src="http://openweathermap.org/img/w/${obj.conditions.icon}.png" alt="${obj.conditions.description}"> </div>
       <p class="temp">Temp: <span>${obj.temp} &#8457</span></p>
       <p class="wind">Wind: <span>${obj.wind_speed} mph</span></p>
       <p class="humidity">Humidity: <span>${obj.humidity}%</span></p>`;
-      
+
       if (obj.uvIndex >= 0) {
         const newUv = document.createElement("p");
         const newSpan = document.createElement("span");
@@ -155,7 +152,7 @@ window.addEventListener("DOMContentLoaded", function () {
         newUv.textContent = "UV-index: ";
         newUv.append(newSpan);
         newSection.append(newUv);
-        
+
         if (uviVal < 4.5) newSpan.style.background = "green";
         else if (uviVal < 5.5) newSpan.style.background = "yellowgreen";
         else if (uviVal < 7.9) newSpan.style.background = "yellow";
@@ -168,7 +165,7 @@ window.addEventListener("DOMContentLoaded", function () {
           newBtn.classList.add("btn");
           newBtn.textContent = "hourly";
           newSection.children[0].append(newBtn);
-          newBtn.addEventListener('click', function() {
+          newBtn.addEventListener('click', function () {
             console.log(obj.hourly);
           })
         }
@@ -195,29 +192,25 @@ window.addEventListener("DOMContentLoaded", function () {
 
       const cityNames = document.querySelectorAll(".forecast-location");
       cityNames.forEach((city) => {
-        if (city.classList.contains("active"))
-        city.classList.remove("active");
-      })
+        if (city.classList.contains("active")) {
+          city.classList.remove("active");
+        }
+      });
       input.classList.add("active");
     }
   }
+    // **** Local Storage ****
 
-  function getHourly (obj) {
+    function setLocalStorage(city, output) {
+      localStorage.setItem(city, JSON.stringify(output));
+    }
 
-  }
+    function getLocalStorage(city) {
+      return JSON.parse(localStorage.getItem(city));
+    }
 
-  // **** Local Storage ****
+    function clearLocalStorage() {
+      localStorage.clear();
+    }
 
-  function setLocalStorage(city, output) {
-    localStorage.setItem(city, JSON.stringify(output));
-  }
-
-  function getLocalStorage(city) {
-    return JSON.parse(localStorage.getItem(city));
-  }
-
-  function clearLocalStorage() {
-    localStorage.clear();
-  }
-
-});
+  });
