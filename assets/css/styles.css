@@ -65,9 +65,10 @@ header {
 }
 main {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
+  transition: var(--transition);
 }
 
 /* input form */
@@ -277,6 +278,7 @@ form {
 @media screen and (min-width: 762px) {
   main {
     flex-direction: row;
+    align-items: flex-start;
   }
 }
 
