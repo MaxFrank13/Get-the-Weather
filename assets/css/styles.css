@@ -16,7 +16,7 @@
 
 :root {
   /* colors */
-  --hottest: #f72585;
+  --hothour: #f72585;
   --hotter: #b5179e;
   --hot: #7209b7;
   --warmer: #560bad;
@@ -40,27 +40,34 @@
   --ff-primary: 'Readex Pro', sans-serif;
   --ff-secondary: 'Roboto', sans-serif;
   --transition: all 0.3s ease-in;
+  --long-trans: all 2s ease-out;
 }
 
 /* Main Content */
 
 body {
   height: 100vh;
-  background: radial-gradient(ellipse at 100%, #bfaee1, transparent);
+  background: radial-gradient(ellipse at 100%, #120925, transparent);
   font-family: var(--ff-primary);
+  text-decoration: none;
+
 }
 header {
   margin-bottom: 1rem;
   padding: 1rem;
-  background: radial-gradient(ellipse at 126%, var(--colder), var(--cold), var(--warm) 104%);
+  background: radial-gradient(ellipse at 126%, var(--colder), var(--cold));
   border-bottom: 3px solid var(--black);
   box-shadow: 0px -5px 13px 13px var(--grey-3);
   color: var(--grey-1);
   font-size: 1.65rem;
+  font-family: var(--ff-secondary);
   text-align: center;
 }
 main {
   display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
 }
 
 /* input form */
@@ -68,9 +75,9 @@ main {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background: linear-gradient(transparent 22%, var(--grey-1), var(--grey-2));
+  background: linear-gradient(transparent 22%, var(--grey-4), var(--grey-5));
   border-bottom-right-radius: 0.5rem;
-  border-bottom: 3px solid var(--black);
+  border-bottom: 3px solid var(--grey-2);
   box-shadow: 0px 15px 15px -14px var(--black);
   transition: var(--transition);
   animation: dropdown 1.3s;
@@ -83,7 +90,7 @@ form {
   padding-bottom: 1rem;
   border-bottom: 3px solid var(--grey-3);
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 #search-input {
   padding: 0.55rem;
@@ -104,7 +111,7 @@ form {
   cursor: pointer;
   padding: 0.7rem;
   font-size: 1.1rem;
-  background: var(--hottest);
+  background: var(--hothour);
   color: var(--grey-4);
   border: none;
   border-radius: 0.35rem;
@@ -115,6 +122,7 @@ form {
   background: var(--warmer);
   color: var(--grey-1);
 }
+
 
 
 /* location select interface */
@@ -128,7 +136,7 @@ form {
   padding: 0.25rem;
   font-size: 0.9rem;
   opacity: 0.8;
-  background: var(--coldest);
+  background: var(--grey-1);
 }
 .forecast-location {
   text-transform: capitalize;
@@ -137,7 +145,7 @@ form {
   animation: dropdown 0.8s;
 }
 .active {
-  box-shadow: inset 0px 0px 2px 2px var(--grey-4);
+  box-shadow: inset 0px 0px 2px 2px var(--grey-2);
   transform: scale(1.05);
 }
 
@@ -147,7 +155,7 @@ form {
   flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem;
-  background: var(--grey-1);
+  background: #8989a3;
   box-shadow: 0px 0px 7px 5px var(--grey-2), inset 0px 0px 5px 2px var(--grey-2);
   transition: var(--transition);
 }
@@ -162,10 +170,11 @@ form {
   transition: var(--transition);
 }
 .forecast-card:nth-child(1) {
+  position: relative;
   font-size: 1.3rem;
   width: 100%;
 }
-.forecast-card:nth-child(1) img {
+.forecast-card:nth-child(1) .forecast-heading img {
   padding: 0.35rem;
   min-width: 6rem;
 }
@@ -184,6 +193,10 @@ form {
 .forecast-card span {
   font-size: 1.4rem;
 }
+.uv-index {
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.3rem;
+}
 .hourly {
   background: var(--neutral);
 }
@@ -191,15 +204,45 @@ form {
   background: var(--grey-4);
   color: var(--grey-1);
 }
-.uv-index {
-  border-radius: 0.3rem;
-  padding: 0.1rem 0.3rem;
+.hour {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 1464px;
+  background: inherit;
+  padding-left: 0.35rem;
+  box-shadow: inset 0px 0px 12px 5px var(--grey-2);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  list-style-type: none;
+  transition: var(--long-trans);
+  
+}
+.hour-hide {
+  height: 0;
+}
+.hour img {
+  min-width: none;
+}
+.hour * {
+  list-style-type: none;
+}
+.hour ul {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+.hour li {
+  border-right: 2px solid var(--grey-1);
+  flex-grow: 1;
+  padding: 0.25rem;
+  font-size: 0.8rem;
 }
 
 
 /* heat based color pallette */
-.hottest {
-  --clay-background: linear-gradient(var(--neutral), var(--hottest));
+.hothour {
+  --clay-background: linear-gradient(var(--neutral), var(--hothour));
 }
 .hotter {
   --clay-background: linear-gradient(var(--neutral), var(--hotter));
@@ -227,6 +270,14 @@ form {
 }
 .coldest {
   --clay-background: linear-gradient(var(--neutral), var(--coldest));
+}
+
+/* Media Queries */
+
+@media screen and (min-width: 762px) {
+  main {
+    flex-direction: row;
+  }
 }
 
 /* Animations */

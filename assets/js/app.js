@@ -37,9 +37,11 @@ window.addEventListener("DOMContentLoaded", function () {
 
   locationsContainer.addEventListener('click', function (e) {
     const input = e.target;
-    const output = getLocalStorage(input.textContent);
-    createForecast(output);
-    changeActiveLocation(input);
+    if (getLocalStorage(input.textContent)) {
+      const output = getLocalStorage(input.textContent);
+      createForecast(output);
+      changeActiveLocation(input);
+    }
   });
 
   clearBtn.addEventListener('click', function () {
@@ -57,7 +59,6 @@ window.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
         data.forEach((city) => {
           const coords = `lat=${city.lat}&lon=${city.lon}`
           getForecast(input, coords);
@@ -171,8 +172,19 @@ window.addEventListener("DOMContentLoaded", function () {
           newBtn.classList.add("btn");
           newBtn.textContent = "hourly";
           newSection.children[0].append(newBtn);
-          newBtn.addEventListener('click', function () {
-            console.log(obj.hourly);
+          console.log(obj.hourly);
+          const newDropDown = document.createElement("section");
+          for (let i = 0; i < 24; i++) {
+            const newList = document.createElement("ul");
+            newList.innerHTML = `<li>${dayjs(obj.hourly[i].dt * 1000).format('h:mma')}</li> <li>${Math.floor(obj.hourly[i].temp)} &#8457</li> <li>${Math.floor(obj.hourly[i].feels_like)} feel</li> <li><img src="http://openweathermap.org/img/w/${obj.hourly[i].weather[0].icon}.png" alt="${obj.hourly[i].weather[0].description}"></li>`
+            newDropDown.append(newList);
+          }
+          newDropDown.classList.add("hour");
+          newDropDown.classList.add("hour-hide");
+          newSection.append(newDropDown);
+          
+          newBtn.addEventListener('click', function (e) {
+            newDropDown.classList.toggle("hour-hide");
           })
         }
       }
@@ -192,9 +204,7 @@ window.addEventListener("DOMContentLoaded", function () {
   }
 
   function changeActiveLocation(input) {
-    console.log(input);
     if (input.classList.contains("forecast-location")) {
-      console.log(input.textContent);
 
       const cityNames = document.querySelectorAll(".forecast-location");
       cityNames.forEach((city) => {
