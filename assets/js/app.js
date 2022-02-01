@@ -52,7 +52,7 @@ window.addEventListener("DOMContentLoaded", function () {
   // **** API Calls ****
 
   function getCoordinates(input) {
-    const requestUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${input}&appid=9e3d200f90a14971a704be16f41dc73c`;
+    const requestUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${input}&appid=9e3d200f90a14971a704be16f41dc73c`;
 
     fetch(requestUrl)
       .then(function (response) {
