@@ -13,15 +13,15 @@ This is a basic weather application used to find the weekly forecast of a given 
 
 ### HTML
 
-Establish general structure of form and provide an empty in which `div` to render a forecast. DayJS is linked as well as a mini CSS library for providing clay-like styles with ease.
+Establish general structure of form and provide an empty `div` in which to render a forecast. DayJS is linked as well as a mini CSS library for providing clay-like styles with ease.
 
 ### CSS
 
-A color pallette is provided in variables that resembles a heat map. "Hotter" colors are pink and "cooler" colors are blue with various shades of purple in between. These are used to color code each forecast entry based on it's temperature. Basic formatting using mostly vanilla CSS and the Clay.css mini-library. One media query is needed to ensure responsiveness on smaller screens.
+A color pallette is provided in variables that resemble a heat map. "Hotter" colors are pink and "colder" colors are blue with various shades of purple in between. These are used to color code each forecast entry based on its temperature. Basic format using mostly vanilla CSS and the Clay.css mini-library. One media query is needed to ensure responsiveness on smaller screens.
 
 ### JavaScript
 
-On page load, the JS checks to see if "WeatherApp" is a key the user's local storage. If it finds "WeatherApp", it will use the value of that key to make a request to the Open Weather API and render the results of that request to the page as forecast cards.
+On page load, the JS checks to see if "WeatherApp" is a key in the user's local storage. If it finds "WeatherApp", it will use the value of that key to make a request to the Open Weather API and render the results of that request to the page as forecast cards. The storage is reset to those forecast values, rather than the values from a previous session.
 
 #### Rough breakdown 
 1. In order to get a forecast, a request is made to the Open Weather API
