@@ -7,7 +7,7 @@ This is a basic weather application used to find the weekly forecast of a given 
 
 [Weather App](https://maxfrank13.github.io/Get-the-Weather/)
 
-![Picture of Weather App](https://github.com/MaxFrank13/Get-the-Weather/blob/main/assets/app-photo.jpg)
+![Picture of Weather App](https://https://github.com/MaxFrank13/Get-the-Weather/blob/main/assets/app-photo.PNG)
 
 ## What's Happening in the Code
 
