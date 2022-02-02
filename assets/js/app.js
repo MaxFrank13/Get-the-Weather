@@ -7,16 +7,17 @@ window.addEventListener("DOMContentLoaded", function () {
   const locationsContainer = document.querySelector(".locations");
   const searchInput = document.querySelector("#search-input");
 
+  const storageArray = [];
   const objectKeys = Object.keys(localStorage);
 
-  if (objectKeys) {
+  if (objectKeys.includes("WeatherApp")) {
     let currentStorage = [];
-    objectKeys.forEach((key) => {
-      currentStorage.push(JSON.stringify(getLocalStorage(key)));
-    })
-    objectKeys.forEach((key) => {
-      getCoordinates(key);
-      createForecastHeader(key);
+    currentStorage = getLocalStorage("WeatherApp");
+    console.log(currentStorage);
+    currentStorage.forEach((obj) => {
+      console.log(obj.city);
+      getCoordinates(obj.city);
+      createForecastHeader(obj.city);
     })
   }
 
@@ -37,11 +38,13 @@ window.addEventListener("DOMContentLoaded", function () {
 
   locationsContainer.addEventListener('click', function (e) {
     const input = e.target;
-    if (getLocalStorage(input.textContent)) {
-      const output = getLocalStorage(input.textContent);
-      createForecast(output);
-      changeActiveLocation(input);
-    }
+    const currentStorage = getLocalStorage("WeatherApp");
+    currentStorage.forEach((obj) => {
+      if (obj.city === e.target.textContent){
+        createForecast(obj.output);
+        changeActiveLocation(input);
+      };
+    });
   });
 
   clearBtn.addEventListener('click', function () {
@@ -75,6 +78,7 @@ window.addEventListener("DOMContentLoaded", function () {
       })
       .then(function (data) {
         readResponse(input, data);
+        setLocalStorage(storageArray);
         const locations = document.querySelectorAll(".forecast-location");
         locations.forEach((location, index) => {
           if (location.textContent === input) {
@@ -119,7 +123,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     })
     createForecast(output);
-    setLocalStorage(input, output);
+    addToStorageArray(input, output);
   }
 
   // create elements using that data
@@ -135,9 +139,6 @@ window.addEventListener("DOMContentLoaded", function () {
   function createForecast(output) {
     // stop animation
     forecastContainer.innerHTML = "";
-    // const newHeader = document.createElement("h2");
-    // newHeader.textContent = input;
-    // forecastContainer.append(newHeader);
 
     output.forEach((obj, index) => {
       const newSection = document.createElement("section");
@@ -157,22 +158,22 @@ window.addEventListener("DOMContentLoaded", function () {
         newSpan.textContent = uviVal;
         newSpan.classList.add("uv-index");
         newUv.textContent = "UV-index: ";
+        newUv.textContent = "UV-index: ";
         newUv.append(newSpan);
         newSection.append(newUv);
 
-        if (uviVal < 4.5) newSpan.style.background = "green";
-        else if (uviVal < 5.5) newSpan.style.background = "yellowgreen";
-        else if (uviVal < 7.9) newSpan.style.background = "yellow";
-        else if (uviVal < 10.0) newSpan.style.background = "orangered";
-        else if (uviVal >= 10.0) newSpan.style.background = "red";
+        if (uviVal < 3) newSpan.style.background = "green";
+        else if (uviVal < 6) newSpan.style.background = "yellow";
+        else if (uviVal < 8) newSpan.style.background = "orange";
+        else if (uviVal < 11) newSpan.style.background = "red";
+        else if (uviVal >= 11) newSpan.style.background = "pink";
 
         if (index === 0) {
           const newBtn = document.createElement("button");
           newBtn.classList.add("hourly");
           newBtn.classList.add("btn");
-          newBtn.textContent = "hourly";
+          newBtn.textContent = "24 hour";
           newSection.children[0].append(newBtn);
-          console.log(obj.hourly);
           const newDropDown = document.createElement("section");
           for (let i = 0; i < 24; i++) {
             const newList = document.createElement("ul");
@@ -217,12 +218,22 @@ window.addEventListener("DOMContentLoaded", function () {
   }
   // **** Local Storage ****
 
-  function setLocalStorage(city, output) {
-    localStorage.setItem(city, JSON.stringify(output));
+  function addToStorageArray(city, output) {
+    const newEntry = {
+      city,
+      output,
+    }
+    storageArray.push(newEntry);
+    console.log(newEntry);
+    console.log(storageArray);
   }
 
-  function getLocalStorage(city) {
-    return JSON.parse(localStorage.getItem(city));
+  function setLocalStorage(output) {
+    localStorage.setItem("WeatherApp", JSON.stringify(output));
+  }
+
+  function getLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
   }
 
   function clearLocalStorage() {
