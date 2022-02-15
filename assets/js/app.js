@@ -109,7 +109,7 @@ window.addEventListener("DOMContentLoaded", function () {
       });
     data.daily.forEach((item, index) => {
 
-      if (index > 0) output.push(
+      if (index > 0 && index < 6) output.push(
         {
           date: dayjs(item.dt * 1000).format('dddd MMM D, YYYY'),
           conditions: {
